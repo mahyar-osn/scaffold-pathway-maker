@@ -1,0 +1,17 @@
+{
+    "id": "keast",
+    "paths": [
+        {
+            "id": "ilxtr:neuron-type-keast-9",
+            "type": "sensory",
+            "edges": [
+                "Lamina V of gray matter of spinal cord second lumbar spinal cord segment",
+                "Central nervous system white matter layer second lumbar spinal cord segment",
+                "Second lumbar dorsal root ganglion",
+                "Inferior mesenteric ganglion",
+                "Pelvic ganglion",
+                "apex of urinary bladder"
+            ]
+        }
+    ]
+}
