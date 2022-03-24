@@ -1,0 +1,11 @@
+{
+    "model": "https://apinatomy.org/uris/models/ard-arm-cardiac",
+    "centreline": "centreline.json",
+    "scaffolds": [
+      {
+        "body": "whole-body.exf",
+        "brainstem": "whole-brainstem.exf",
+        "heart": "whole-heart.exf"
+      }
+    ]
+}
