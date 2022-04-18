@@ -1,6 +1,8 @@
 from opencmiss.zinc.context import Context
 from opencmiss.zinc.field import Field
+from opencmiss.zinc.node import Node
 from opencmiss.zinc.result import RESULT_OK
+
 
 from opencmiss.utils.zinc.finiteelement import get_element_node_identifiers
 
@@ -17,7 +19,7 @@ def load(input_centreline_file_name):
 def _get_centreline_connectivity(region):
     field_module = region.getFieldmodule()
     field_cache = field_module.createFieldcache()
-    coordinate_field = field_module.findFieldByName("coordinates")
+    coordinate_field = field_module.findFieldByName("coordinates").castFiniteElement()
     marker_name_field = field_module.findFieldByName("marker_name")
     marker_group = field_module.findFieldByName("ilx11")
 
@@ -25,8 +27,12 @@ def _get_centreline_connectivity(region):
 
     nodes = field_module.findNodesetByFieldDomainType(Field.DOMAIN_TYPE_NODES)
 
+    markers_edges_list = []
+    markers_nodes_list = []
+    x_list = []
     element_iter = mesh.createElementiterator()
     element = element_iter.next()
+    componentsCount = coordinate_field.getNumberOfComponents()
     if marker_group.isValid():
         marker_group = marker_group.castGroup()
         marker_node_group = marker_group.getFieldNodeGroup(nodes)
@@ -45,4 +51,17 @@ def _get_centreline_connectivity(region):
 
                 print('Element ', element.getIdentifier())
                 print('\t Nodes: ', node_names)
+                markers_edges_list.append(node_names)
                 element = element_iter.next()
+
+    nodeIter = nodes.createNodeiterator()
+    node = nodeIter.next()
+    while node.isValid():
+        field_cache.setNode(node)
+        name = marker_name_field.evaluateString(field_cache)
+        result, values = coordinate_field.getNodeParameters(field_cache, -1, Node.VALUE_LABEL_VALUE, 1, componentsCount)
+        markers_nodes_list.append(name)
+        x_list.append(values)
+        node = nodeIter.next()
+
+    return markers_edges_list, markers_nodes_list, x_list

@@ -1,0 +1,193 @@
+EX Version: 2
+Region: /
+!#nodeset nodes
+Shape. Dimension=0
+#Fields=3
+1) coordinates, coordinate, rectangular cartesian, real, #Components=3
+ x. #Values=1 (value)
+ y. #Values=1 (value)
+ z. #Values=1 (value)
+2) marker_name, field, string, #Components=1
+ 1. #Values=1 (value)
+3) radius, field, rectangular cartesian, real, #Components=1
+ 1. #Values=1 (value)
+Node: 1
+ -3.170000000000000e+00
+ -5.870000000000000e+01
+  1.486200000000000e+03
+ "nucleus of solitary tract"
+  1.200000000000000e+00
+Node: 2
+ -6.700000000000000e-01
+ -6.265000000000000e+01
+  1.481200000000000e+03
+ medulla
+  1.200000000000000e+00
+Node: 3
+  3.550000000000000e+01
+ -7.840000000000001e+01
+  1.463400000000000e+03
+ "inferior vagus X ganglion"
+  1.200000000000000e+00
+Node: 4
+  2.853000000000000e+01
+ -1.122600000000000e+02
+  1.304890000000000e+03
+ aorta
+  1.200000000000000e+00
+Node: 5
+  1.693000000000000e+01
+ -9.502000000000000e+01
+  1.255180000000000e+03
+ "fibrous pericardium"
+  1.200000000000000e+00
+Node: 6
+  1.675000000000000e+01
+ -9.498999999999999e+01
+  1.254430000000000e+03
+ "parietal pericardium"
+  1.200000000000000e+00
+Node: 7
+  1.671000000000000e+01
+ -9.498999999999999e+01
+  1.254200000000000e+03
+ "pericardial fluid"
+  1.200000000000000e+00
+Node: 8
+  1.658000000000000e+01
+ -9.498999999999999e+01
+  1.253970000000000e+03
+ "visceral pericardium"
+  1.200000000000000e+00
+Node: 9
+  1.657000000000000e+01
+ -9.495999999999999e+01
+  1.253760000000000e+03
+ epicardium
+  1.200000000000000e+00
+Node: 10
+  3.429000000000000e+01
+ -8.330000000000000e+01
+  1.236680000000000e+03
+ "myocardium left atrium"
+  1.200000000000000e+00
+Node: 11
+  3.350000000000000e+01
+ -8.370999999999999e+01
+  1.236890000000000e+03
+ "endocardium left atrium"
+  1.200000000000000e+00
+Node: 12
+  5.069000000000000e+01
+ -1.201300000000000e+02
+  1.245100000000000e+03
+ "myocardium left ventricle"
+  1.200000000000000e+00
+Node: 13
+  4.685000000000000e+01
+ -1.196900000000000e+02
+  1.241500000000000e+03
+ "endocardium left ventricle"
+  1.200000000000000e+00
+!#mesh mesh1d, dimension=1, nodeset=nodes
+Shape. Dimension=1, line
+#Scale factor sets=0
+#Nodes=2
+#Fields=2
+1) coordinates, coordinate, rectangular cartesian, real, #Components=3
+ x. l.Lagrange, no modify, standard node based.
+  #Nodes=2
+  1. #Values=1
+   Value labels: value
+  2. #Values=1
+   Value labels: value
+ y. l.Lagrange, no modify, standard node based.
+  #Nodes=2
+  1. #Values=1
+   Value labels: value
+  2. #Values=1
+   Value labels: value
+ z. l.Lagrange, no modify, standard node based.
+  #Nodes=2
+  1. #Values=1
+   Value labels: value
+  2. #Values=1
+   Value labels: value
+2) radius, field, rectangular cartesian, real, #Components=1
+ 1. l.Lagrange, no modify, standard node based.
+  #Nodes=2
+  1. #Values=1
+   Value labels: value
+  2. #Values=1
+   Value labels: value
+Element: 1
+ Nodes:
+ 1 2
+Element: 2
+ Nodes:
+ 2 3
+Element: 3
+ Nodes:
+ 3 4
+Element: 4
+ Nodes:
+ 4 5
+Element: 5
+ Nodes:
+ 5 6
+Element: 6
+ Nodes:
+ 6 7
+Element: 7
+ Nodes:
+ 7 8
+Element: 8
+ Nodes:
+ 8 9
+Element: 9
+ Nodes:
+ 9 10
+Element: 10
+ Nodes:
+ 10 11
+Element: 11
+ Nodes:
+ 9 12
+Element: 12
+ Nodes:
+ 12 13
+ Group name: ilx
+ Group name: ilx11
+!#nodeset nodes
+Shape. Dimension=0
+#Fields=0
+Node: 1
+Node: 2
+Node: 3
+Node: 4
+Node: 5
+Node: 6
+Node: 7
+Node: 8
+Node: 9
+Node: 10
+Node: 11
+Node: 12
+Node: 13
+!#mesh mesh1d, dimension=1, nodeset=nodes
+Shape. Dimension=1, line
+#Scale factor sets=0
+#Nodes=0
+#Fields=0
+Element: 1
+Element: 2
+Element: 3
+Element: 4
+Element: 5
+Element: 6
+Element: 7
+Element: 8
+Element: 9
+Element: 10
+Element: 11
+Element: 12

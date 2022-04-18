@@ -1,6 +1,6 @@
 {
     "model": "https://apinatomy.org/uris/models/ard-arm-cardiac",
-    "centreline": "centreline.json",
+    "centreline": "ilx11.exf",
     "scaffolds": [
       {
         "body": "whole-body.exf",
