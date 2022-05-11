@@ -3,15 +3,17 @@ import sys
 import json
 import argparse
 
-from pathmaker.scaffold_terms import load
-from pathmaker.centreline import load as load_centreline
-from pathmaker.connectivity_graph import connectivity_graph
-from pathmaker.path_scaffold import Path
+from centreline import load as load_centreline
+from connectivity_graph import connectivity_graph
+from path_scaffold import write_file, generate_path_scaffold
+from scaffold_terms import load
 
 from mapknowledge import KnowledgeStore
 
+import networkx as nx
 
-__store__ = KnowledgeStore(None)
+store_dir = r"C:\Users\egha355\Desktop\work_related\automatenerveTest\codes\scaffold-pathway-maker\tests\ardell\rat"
+__store__ = KnowledgeStore(store_dir)
 
 
 class ProgramArguments(object):
@@ -59,6 +61,46 @@ def get_paths(entity):
     return paths
 
 
+def print_paths_edges(paths: list):
+    graphs = {}
+    for path in paths:
+        # skip the one that gives error
+        if path != 'ilxtr:neuron-type-aacar-13':
+            graphs[path] = connectivity_graph(path, __store__)
+
+            print()
+            print(path)
+            edge_list = []
+            for edge in graphs[path].edges:
+                edge_list.append(edge)
+                print(edge)
+
+
+def get_edges_list(path):
+    graph = connectivity_graph(path, __store__)
+    edge_list = []
+    for edge in graph.edges:
+        edge_list.append(edge)
+
+    return edge_list
+
+
+def get_markers(marker_names, x_list):
+    markers = {}
+    for i, c in enumerate(marker_names):
+        markers[c] = x_list[i]
+    return markers
+
+
+def get_model_paths(model: str):
+    """ Get ApiNATOMY model data from SCKAN
+    """
+    entity = __store__.entity_knowledge(model)
+    paths = get_paths(entity)
+
+    return paths
+
+
 def main():
     args = parse_args()
     if os.path.exists(args.input_manifest):
@@ -76,10 +118,6 @@ def main():
         centreline_scaffold_file = manifest['centreline']
         whole_body_organ_scaffold_list = manifest['scaffolds']
 
-        """ Get ApiNATOMY model data from SCKAN
-        """
-        entity = __store__.entity_knowledge(model)
-
         """ Get terms from each scaffold
         """
         scaffold_regions = {}
@@ -87,16 +125,21 @@ def main():
             f = os.path.join(root, filename)
             region, terms = load(f, name)
 
-        load_centreline(centreline_scaffold_file)
+        fi = os.path.join(root, centreline_scaffold_file)
+        centreline_edges, centreline_marker_names, x_list = load_centreline(fi)
+        centreline_markers = get_markers(centreline_marker_names, x_list)
 
         # body_marker_data = _read_scaffold(args.input_body_scaffold)
-        neuron_paths = get_paths(entity)
 
-        graphs = {}
+        neuron_id = 'ilxtr:neuron-type-aacar-11'
+        # neuron_paths = get_model_paths(model)
+        # print_paths_edges(neuron_paths)
+        # print_paths_edges([neuron_id])
 
-        for path in neuron_paths:
-            if path == 'ilxtr:neuron-type-aacar-11':
-                graphs[path] = connectivity_graph(path, __store__)
+        edge_list = get_edges_list(neuron_id)
+        path_nodes, path_elements = generate_path_scaffold(centreline_marker_names, edge_list)
+
+        write_file(path_elements, path_nodes, centreline_markers, os.path.join(root, 'output_neuron_scaffold.exf'))
 
         # connectivity = _read_connectivity(args.input_connectivity)
 
